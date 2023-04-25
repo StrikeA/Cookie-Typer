@@ -10,40 +10,40 @@ class Player:
         self.balance = 0
         self.achievements = []
         self.buildings = {KeyBoard: 0, Laptop: 0, GamingPC: 0, Server: 0}
-        self.BuildingUpgrades = {KeyBoard: [],
-                                 Laptop: [], GamingPC: [], Server: []}
+        self.BuildingUpgrades = {KeyBoard: [], Laptop: [], GamingPC: [], Server: []}
 
 
 class KeyBoard:
     def __init__(self) -> None:
         self.price = 10
         self.amount = 0
-        self.cps = 1 * self.amount * 1.01 ** len(self.upgrades)
         self.upgrades = []
+        self.cps = 1 * self.amount * 1.01 ** len(self.upgrades)
+
 
 
 class Laptop:
     def __init__(self) -> None:
         self.price = 100
         self.amount = 0
-        self.cps = 12.5 * self.amount * 1.01 ** len(self.upgrades)
         self.upgrades = []
+        self.cps = 12.5 * self.amount * 1.01 ** len(self.upgrades)
 
 
 class GamingPC:
     def __init__(self) -> None:
         self.price = 1000
         self.amount = 0
-        self.cps = 125 * self.amount * 1.01 ** len(self.upgrades)
         self.upgrades = []
+        self.cps = 125 * self.amount * 1.01 ** len(self.upgrades)
 
 
 class Server:
     def __init__(self) -> None:
         self.price = 10000
         self.amount = 0
-        self.cps = 1500 * self.amount * 1.01 ** len(self.upgrades)
         self.upgrades = []
+        self.cps = 1500 * self.amount * 1.01 ** len(self.upgrades)
 
 
 class BitCoinMiner:
@@ -55,10 +55,10 @@ class BitCoinMiner:
         self.BuildingTypes = [KeyBoard, Laptop, GamingPC, Server]
 
     def BuyBuilding(self, building):
-        if self.player.balance >= building.price:
-            self.player.balance -= building.price
-            building.price *= 1.15
-            building.amount += 1
+        if self.player.balance >= building().price:
+            self.player.balance -= building().price
+            building().price *= 1.15
+            building().amount += 1
             self.player.buildings[building] += 1
         if building not in self.player.achievements:
             self.player.achievements.append(building)
@@ -72,7 +72,7 @@ class BitCoinMiner:
         self.player.balance += 1
 
     def CalcBPF(self):
-        BPF = sum([building.cps for building in self.player.achievements]) / 60
+        BPF = (sum([building().cps for building in self.player.achievements]) / 60) * 1.01 ** len(self.player.achievements)
         return BPF
 
     def draw(self):
@@ -82,13 +82,13 @@ class BitCoinMiner:
         self.screen.blit(self.font.render(
             f"CPS: {self.CalcBPF()}", True, (255, 255, 255)), (0, 30))
         self.screen.blit(self.font.render(
-            f"KeyBoards: {KeyBoard.amount}", True, (255, 255, 255)), (0, 60))
+            f"KeyBoards: {KeyBoard().amount}", True, (255, 255, 255)), (0, 60))
         self.screen.blit(self.font.render(
-            f"Laptops: {Laptop.amount}", True, (255, 255, 255)), (0, 90))
+            f"Laptops: {Laptop().amount}", True, (255, 255, 255)), (0, 90))
         self.screen.blit(self.font.render(
-            f"GamingPCs: {GamingPC.amount}", True, (255, 255, 255)), (0, 120))
+            f"GamingPCs: {GamingPC().amount}", True, (255, 255, 255)), (0, 120))
         self.screen.blit(self.font.render(
-            f"Servers: {Server.amount}", True, (255, 255, 255)), (0, 150))
+            f"Servers: {Server().amount}", True, (255, 255, 255)), (0, 150))
         pygame.display.update()
 
     def save(self):
@@ -105,6 +105,12 @@ class BitCoinMiner:
             Server.amount = self.player.buildings[Server]
         except:
             pass
+    def DeleteSave(self):
+        self.player = Player()
+        KeyBoard.amount = self.player.buildings[KeyBoard]
+        Laptop.amount = self.player.buildings[Laptop]
+        GamingPC.amount = self.player.buildings[GamingPC]
+        Server.amount = self.player.buildings[Server]
 
     def run(self):
         self.load()
@@ -120,6 +126,8 @@ class BitCoinMiner:
                     self.click()
                 if event.type == pygame.KEYUP and event.key == pygame.K_s:
                     self.save()
+                if event.type == pygame.KEYUP and event.key == pygame.K_d:
+                    self.DeleteSave()
                 if event.type == pygame.KEYUP and event.key == pygame.K_1:
                     self.BuyBuilding(KeyBoard)
                 if event.type == pygame.KEYUP and event.key == pygame.K_2:
