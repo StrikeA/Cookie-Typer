@@ -46,10 +46,7 @@ class Server:
 
     def cps(self):
         return 1500 * self.amount * 1.01 ** len(self.upgrades)
-
-        
-
-
+    
 class BitCoinMiner:
     def __init__(self) -> None:
         self.player = Player()
@@ -65,13 +62,13 @@ class BitCoinMiner:
             building.amount += 1
         if building.__class__ not in self.player.achievements:
             self.player.achievements.append(building.__class__)
-        if self.player.achievements == 4:
-            self.player.achievements.append("All buildings")
 
     def SellBuilding(self, building):
         if building.amount > 0:
-            building.amount -= 1
+            building.price /= 1.15
             self.player.balance += building.price / 2
+            building.amount -= 1
+            
 
     def click(self):
         self.player.balance += 1
@@ -92,21 +89,6 @@ class BitCoinMiner:
         self.screen.blit(self.font.render(f"Price: {round(self.BuildingTypes[2].price, 2)}", True, (0, 0, 0)), (10, 220))
         self.screen.blit(self.font.render(f"Servers: {self.BuildingTypes[3].amount}", True, (0, 0, 0)), (10, 250))
         self.screen.blit(self.font.render(f"Price: {round(self.BuildingTypes[3].price, 2)}", True, (0, 0, 0)), (10, 280))
-        self.screen.fill((0, 0, 0))
-        self.screen.blit(self.font.render(
-            f"Balance: {self.player.balance}", True, (255, 255, 255)), (0, 0))
-        self.screen.blit(self.font.render(
-            f"BPS: {self.CalcBPF() * 60}", True, (255, 255, 255)), (0, 30))
-        self.screen.blit(self.font.render(
-            f"KeyBoards: {self.BuildingTypes[0].amount}", True, (255, 255, 255)), (0, 60))
-        self.screen.blit(self.font.render(
-            f"Laptops: {self.BuildingTypes[1].amount}", True, (255, 255, 255)), (0, 90))
-        self.screen.blit(self.font.render(
-            f"GamingPCs: {self.BuildingTypes[2].amount}", True, (255, 255, 255)), (0, 120))
-        self.screen.blit(self.font.render(
-            f"Servers: {self.BuildingTypes[3].amount}", True, (255, 255, 255)), (0, 150))
-        self.screen.blit(self.font.render(
-            f"Achievments: {self.player.achievements}", True, (255, 255, 255)), (0, 180))
         pygame.display.update()
 
 
@@ -119,17 +101,30 @@ class BitCoinMiner:
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     quit()
+
+                keys = pygame.key.get_pressed()
                 if event.type == pygame.KEYUP and event.key == pygame.K_SPACE:
                     self.click()
                 if event.type == pygame.KEYUP and event.key == pygame.K_1:
-                    self.BuyBuilding(self.BuildingTypes[0])
+                    if keys[pygame.K_LSHIFT]:
+                        self.SellBuilding(self.BuildingTypes[0])
+                    else:
+                        self.BuyBuilding(self.BuildingTypes[0])
                 if event.type == pygame.KEYUP and event.key == pygame.K_2:
-                    self.BuyBuilding(self.BuildingTypes[1])
+                    if keys[pygame.K_LSHIFT]:
+                        self.SellBuilding(self.BuildingTypes[1])
+                    else:
+                        self.BuyBuilding(self.BuildingTypes[1])
                 if event.type == pygame.KEYUP and event.key == pygame.K_3:
-                    self.BuyBuilding(self.BuildingTypes[2])
+                    if keys[pygame.K_LSHIFT]:
+                        self.SellBuilding(self.BuildingTypes[2])
+                    else:
+                        self.BuyBuilding(self.BuildingTypes[2])
                 if event.type == pygame.KEYUP and event.key == pygame.K_4:
-                    self.BuyBuilding(self.BuildingTypes[3])
-
+                    if keys[pygame.K_LSHIFT]:
+                        self.SellBuilding(self.BuildingTypes[3])
+                    else:
+                        self.BuyBuilding(self.BuildingTypes[3])
 
 Game = BitCoinMiner()
 Game.run()
