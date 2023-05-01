@@ -65,8 +65,10 @@ class BitCoinMiner:
 
     def SellBuilding(self, building):
         if building.amount > 0:
-            building.amount -= 1
+            building.price /= 1.15
             self.player.balance += building.price / 2
+            building.amount -= 1
+            
 
     def click(self):
         self.player.balance += 1
@@ -76,7 +78,7 @@ class BitCoinMiner:
         return BPF
 
     def draw(self):
-        self.screen.fill((255, 255, 255))
+        self.screen.fill((110, 64, 21))
         self.screen.blit(self.font.render(f"Balance: {round(self.player.balance, 2)}", True, (0, 0, 0)), (10, 10))
         self.screen.blit(self.font.render(f"BPS: {round(self.CalcBPF() * 60, 2)}", True, (0, 0, 0)), (10, 40))
         self.screen.blit(self.font.render(f"Keyboards: {self.BuildingTypes[0].amount}", True, (0, 0, 0)), (10, 70))
@@ -99,17 +101,30 @@ class BitCoinMiner:
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     quit()
+
+                keys = pygame.key.get_pressed()
                 if event.type == pygame.KEYUP and event.key == pygame.K_SPACE:
                     self.click()
                 if event.type == pygame.KEYUP and event.key == pygame.K_1:
-                    self.BuyBuilding(self.BuildingTypes[0])
+                    if keys[pygame.K_LSHIFT]:
+                        self.SellBuilding(self.BuildingTypes[0])
+                    else:
+                        self.BuyBuilding(self.BuildingTypes[0])
                 if event.type == pygame.KEYUP and event.key == pygame.K_2:
-                    self.BuyBuilding(self.BuildingTypes[1])
+                    if keys[pygame.K_LSHIFT]:
+                        self.SellBuilding(self.BuildingTypes[1])
+                    else:
+                        self.BuyBuilding(self.BuildingTypes[1])
                 if event.type == pygame.KEYUP and event.key == pygame.K_3:
-                    self.BuyBuilding(self.BuildingTypes[2])
+                    if keys[pygame.K_LSHIFT]:
+                        self.SellBuilding(self.BuildingTypes[2])
+                    else:
+                        self.BuyBuilding(self.BuildingTypes[2])
                 if event.type == pygame.KEYUP and event.key == pygame.K_4:
-                    self.BuyBuilding(self.BuildingTypes[3])
-
+                    if keys[pygame.K_LSHIFT]:
+                        self.SellBuilding(self.BuildingTypes[3])
+                    else:
+                        self.BuyBuilding(self.BuildingTypes[3])
 
 Game = BitCoinMiner()
 Game.run()
