@@ -92,6 +92,21 @@ class BitCoinMiner:
         self.screen.blit(self.font.render(f"Price: {round(self.BuildingTypes[2].price, 2)}", True, (0, 0, 0)), (10, 220))
         self.screen.blit(self.font.render(f"Servers: {self.BuildingTypes[3].amount}", True, (0, 0, 0)), (10, 250))
         self.screen.blit(self.font.render(f"Price: {round(self.BuildingTypes[3].price, 2)}", True, (0, 0, 0)), (10, 280))
+        self.screen.fill((0, 0, 0))
+        self.screen.blit(self.font.render(
+            f"Balance: {self.player.balance}", True, (255, 255, 255)), (0, 0))
+        self.screen.blit(self.font.render(
+            f"BPS: {self.CalcBPF() * 60}", True, (255, 255, 255)), (0, 30))
+        self.screen.blit(self.font.render(
+            f"KeyBoards: {self.BuildingTypes[0].amount}", True, (255, 255, 255)), (0, 60))
+        self.screen.blit(self.font.render(
+            f"Laptops: {self.BuildingTypes[1].amount}", True, (255, 255, 255)), (0, 90))
+        self.screen.blit(self.font.render(
+            f"GamingPCs: {self.BuildingTypes[2].amount}", True, (255, 255, 255)), (0, 120))
+        self.screen.blit(self.font.render(
+            f"Servers: {self.BuildingTypes[3].amount}", True, (255, 255, 255)), (0, 150))
+        self.screen.blit(self.font.render(
+            f"Achievments: {self.player.achievements}", True, (255, 255, 255)), (0, 180))
         pygame.display.update()
 
 
