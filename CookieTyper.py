@@ -62,6 +62,8 @@ class BitCoinMiner:
             building.amount += 1
         if building.__class__ not in self.player.achievements:
             self.player.achievements.append(building.__class__)
+        if self.CalcBPF()*60 == 100:
+            self.player.achievements.append("Making bank")
 
     def SellBuilding(self, building):
         if building.amount > 0:
