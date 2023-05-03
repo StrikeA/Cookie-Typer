@@ -54,15 +54,64 @@ class Server:
     def bps(self):
         return 1500 * self.amount * 1.01 ** self.upgrades
 
+class SuperComputer:
+    def __init__(self) -> None:
+        self.price = 100000
+        self.amount = 0
+        self.upgrades = 0
+        self.upgrade_price = 1000000
+
+    def bps(self):
+        return 25000 * self.amount * 2 ** self.upgrades
+
+class QuantumComputer:
+    def __init__(self) -> None:
+        self.price = 1000000
+        self.amount = 0
+        self.upgrades = 0
+        self.upgrade_price = 10000000
+
+    def bps(self):
+        return 500000 * self.amount * 2 ** self.upgrades
+
+class AI:
+    def __init__(self) -> None:
+        self.price = 10000000
+        self.amount = 0
+        self.upgrades = 0
+        self.upgrade_price = 100000000
+
+    def bps(self):
+        return 10000000 * self.amount * 2 ** self.upgrades
+
+class QuantumAI:
+    def __init__(self) -> None:
+        self.price = 100000000
+        self.amount = 0
+        self.upgrades = 0
+        self.upgrade_price = 1000000000
+
+    def bps(self):
+        return 1000000000 * self.amount * 2 ** self.upgrades
+
+class DysonSphere:
+    def __init__(self) -> None:
+        self.price = 1000000000
+        self.amount = 0
+        self.upgrades = 0
+        self.upgrade_price = 10000000000
+
+    def bps(self):
+        return 10000000000 * self.amount * 2 ** self.upgrades
 
 class BitCoinMiner:
     def __init__(self) -> None:
         self.player = Player()
         self.total_earned = 0
-        self.screen = pygame.display.set_mode((800, 600))
+        self.screen = pygame.display.set_mode((1200, 900))
         self.clock = pygame.time.Clock()
         self.font = pygame.font.SysFont("Arial", 30)
-        self.BuildingTypes = [KeyBoard(), Laptop(), GamingPC(), Server()]
+        self.BuildingTypes = [KeyBoard(), Laptop(), GamingPC(), Server(), SuperComputer(), QuantumComputer(), AI(), QuantumAI(), DysonSphere()]
 
     def BuyBuilding(self, building):
         if self.player.balance >= building.price:
@@ -99,42 +148,36 @@ class BitCoinMiner:
         self.screen.blit(self.font.render(
             f"BPS: {round(self.CalcBPF() * 60, 2)}", True, (0, 0, 0)), (10, 40))
         self.screen.blit(self.font.render(
-            f"Achievements: {len(self.player.achievements)}", True, (0, 0, 0)), (10, 550))
-        self.screen.blit(self.font.render(
-            f"Keyboards: {self.BuildingTypes[0].amount}", True, (0, 0, 0)), (10, 70))
-        self.screen.blit(self.font.render(
-            f"Price: {round(self.BuildingTypes[0].price, 2)}", True, (0, 0, 0)), (10, 100))
-        self.screen.blit(self.font.render(
-            f"keyboard upgrades: {self.BuildingTypes[0].upgrades}", True, (0, 0, 0)), (400, 70))
-        self.screen.blit(self.font.render(
-            f"Price: {round(self.BuildingTypes[0].upgrade_price, 2)}", True, (0, 0, 0)), (400, 100))
-        self.screen.blit(self.font.render(
-            f"Laptops: {self.BuildingTypes[1].amount}", True, (0, 0, 0)), (10, 130))
-        self.screen.blit(self.font.render(
-            f"Price: {round(self.BuildingTypes[1].price, 2)}", True, (0, 0, 0)), (10, 160))
-        self.screen.blit(self.font.render(
-            f"laptop upgrades: {self.BuildingTypes[1].upgrades}", True, (0, 0, 0)), (400, 130))
-        self.screen.blit(self.font.render(
-            f"Price: {round(self.BuildingTypes[1].upgrade_price, 2)}", True, (0, 0, 0)), (400, 160))
-        self.screen.blit(self.font.render(
-            f"GamingPCs: {self.BuildingTypes[2].amount}", True, (0, 0, 0)), (10, 190))
-        self.screen.blit(self.font.render(
-            f"Price: {round(self.BuildingTypes[2].price, 2)}", True, (0, 0, 0)), (10, 220))
-        self.screen.blit(self.font.render(
-            f"GamingPC upgrades: {self.BuildingTypes[2].upgrades}", True, (0, 0, 0)), (400, 190))
-        self.screen.blit(self.font.render(
-            f"Price: {round(self.BuildingTypes[2].upgrade_price, 2)}", True, (0, 0, 0)), (400, 220))
-        self.screen.blit(self.font.render(
-            f"Servers: {self.BuildingTypes[3].amount}", True, (0, 0, 0)), (10, 250))
-        self.screen.blit(self.font.render(
-            f"Price: {round(self.BuildingTypes[3].price, 2)}", True, (0, 0, 0)), (10, 280))
-        self.screen.blit(self.font.render(
-            f"Server upgrades: {self.BuildingTypes[3].upgrades}", True, (0, 0, 0)), (400, 250))
-        self.screen.blit(self.font.render(
-            f"Price: {round(self.BuildingTypes[3].upgrade_price, 2)}", True, (0, 0, 0)), (400, 280))
+            f"Achievements: {len(self.player.achievements)}", True, (0, 0, 0)), (10, 850))
+
+        y_pos = 70
+        for building in self.BuildingTypes:
+            self.screen.blit(self.font.render(
+                f"{building.__class__.__name__}: {building.amount}", True, (0, 0, 0)), (10, y_pos))
+            self.screen.blit(self.font.render(
+                f"Price: {round(building.price, 2)}", True, (0, 0, 0)), (10, y_pos + 30))
+            self.screen.blit(self.font.render(
+                f"{building.__class__.__name__} upgrades: {building.upgrades}", True, (0, 0, 0)), (400, y_pos))
+            self.screen.blit(self.font.render(
+                f"Price: {round(building.upgrade_price, 2)}", True, (0, 0, 0)), (400, y_pos + 30))
+            y_pos += 60
+
         pygame.display.update()
 
+    def save(self):
+        with open("save.pickle", "wb") as f:
+            pickle.dump([self.player, self.BuildingTypes], f)
+    
+    def load(self):
+        try:
+            with open("save.pickle", "rb") as f:
+                self.player, self.BuildingTypes = pickle.load(f)
+        except:
+            pass
+
+
     def run(self):
+        self.load()
         while True:
             self.clock.tick(60)
             self.player.balance += self.CalcBPF()
@@ -142,6 +185,7 @@ class BitCoinMiner:
             self.draw()
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
+                    self.save()
                     pygame.quit()
                     quit()
 
@@ -176,6 +220,41 @@ class BitCoinMiner:
                         self.BuyUpgrade(self.BuildingTypes[3])
                     else:
                         self.BuyBuilding(self.BuildingTypes[3])
+                if event.type == pygame.KEYUP and event.key == pygame.K_5:
+                    if keys[pygame.K_LSHIFT]:
+                        self.SellBuilding(self.BuildingTypes[4])
+                    elif keys[pygame.K_LCTRL]:
+                        self.BuyUpgrade(self.BuildingTypes[4])
+                    else:
+                        self.BuyBuilding(self.BuildingTypes[4])
+                if event.type == pygame.KEYUP and event.key == pygame.K_6:
+                    if keys[pygame.K_LSHIFT]:
+                        self.SellBuilding(self.BuildingTypes[5])
+                    elif keys[pygame.K_LCTRL]:
+                        self.BuyUpgrade(self.BuildingTypes[5])
+                    else:
+                        self.BuyBuilding(self.BuildingTypes[5])
+                if event.type == pygame.KEYUP and event.key == pygame.K_7:
+                    if keys[pygame.K_LSHIFT]:
+                        self.SellBuilding(self.BuildingTypes[6])
+                    elif keys[pygame.K_LCTRL]:
+                        self.BuyUpgrade(self.BuildingTypes[6])
+                    else:
+                        self.BuyBuilding(self.BuildingTypes[6])
+                if event.type == pygame.KEYUP and event.key == pygame.K_8:
+                    if keys[pygame.K_LSHIFT]:
+                        self.SellBuilding(self.BuildingTypes[7])
+                    elif keys[pygame.K_LCTRL]:
+                        self.BuyUpgrade(self.BuildingTypes[7])
+                    else:
+                        self.BuyBuilding(self.BuildingTypes[7])
+                if event.type == pygame.KEYUP and event.key == pygame.K_9:
+                    if keys[pygame.K_LSHIFT]:
+                        self.SellBuilding(self.BuildingTypes[8])
+                    elif keys[pygame.K_LCTRL]:
+                        self.BuyUpgrade(self.BuildingTypes[8])
+                    else:
+                        self.BuyBuilding(self.BuildingTypes[8])
 
 
 Game = BitCoinMiner()
