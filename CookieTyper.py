@@ -15,7 +15,9 @@ class KeyBoard:
     def __init__(self) -> None:
         self.price = 10
         self.amount = 0
+        self.next_achievement = 1
         self.upgrades = 0
+        self.next_upgrade_achievement = 1
         self.upgrade_price = 100
 
     def bps(self):
@@ -26,7 +28,9 @@ class Laptop:
     def __init__(self) -> None:
         self.price = 100
         self.amount = 0
+        self.next_achievement = 1
         self.upgrades = 0
+        self.next_upgrade_achievement = 1
         self.upgrade_price = 1000
 
     def bps(self):
@@ -37,7 +41,9 @@ class GamingPC:
     def __init__(self) -> None:
         self.price = 1000
         self.amount = 0
+        self.next_achievement = 1
         self.upgrades = 0
+        self.next_upgrade_achievement = 1
         self.upgrade_price = 10000
 
     def bps(self):
@@ -48,7 +54,9 @@ class Server:
     def __init__(self) -> None:
         self.price = 10000
         self.amount = 0
+        self.next_achievement = 1
         self.upgrades = 0
+        self.next_upgrade_achievement = 1
         self.upgrade_price = 100000
 
     def bps(self):
@@ -58,7 +66,9 @@ class SuperComputer:
     def __init__(self) -> None:
         self.price = 100000
         self.amount = 0
+        self.next_achievement = 1
         self.upgrades = 0
+        self.next_upgrade_achievement = 1
         self.upgrade_price = 1000000
 
     def bps(self):
@@ -69,6 +79,7 @@ class QuantumComputer:
         self.price = 1000000
         self.amount = 0
         self.upgrades = 0
+        self.next_upgrade_achievement = 1
         self.upgrade_price = 10000000
 
     def bps(self):
@@ -78,7 +89,9 @@ class AI:
     def __init__(self) -> None:
         self.price = 10000000
         self.amount = 0
+        self.next_achievement = 1
         self.upgrades = 0
+        self.next_upgrade_achievement = 1
         self.upgrade_price = 100000000
 
     def bps(self):
@@ -88,7 +101,9 @@ class QuantumAI:
     def __init__(self) -> None:
         self.price = 100000000
         self.amount = 0
+        self.next_achievement = 1
         self.upgrades = 0
+        self.next_upgrade_achievement = 1
         self.upgrade_price = 1000000000
 
     def bps(self):
@@ -98,7 +113,9 @@ class DysonSphere:
     def __init__(self) -> None:
         self.price = 1000000000
         self.amount = 0
+        self.next_achievement = 1
         self.upgrades = 0
+        self.next_upgrade_achievement = 1
         self.upgrade_price = 10000000000
 
     def bps(self):
@@ -118,8 +135,6 @@ class BitCoinMiner:
             self.player.balance -= building.price
             building.price *= 1.15
             building.amount += 1
-        if building.__class__ not in self.player.achievements:
-            self.player.achievements.append(building.__class__)
 
     def SellBuilding(self, building):
         if building.amount > 0:
@@ -165,6 +180,15 @@ class BitCoinMiner:
             y_pos += 60
 
         pygame.display.update()
+
+    def achievements(self):
+        for building in self.BuildingTypes:
+            if building.amount >= building.next_achievement:
+                self.player.achievements.append(building.__class__)
+                building.next_achievement *= 10
+            if building.upgrades >= building.next_upgrade_achievement:
+                self.player.achievements.append(building.__class__)
+                building.next_upgrade_achievement *= 10
 
     def save(self):
         with open("save.pickle", "wb") as f:
