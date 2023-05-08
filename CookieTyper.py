@@ -166,7 +166,7 @@ class BitCoinMiner:
         self.player.balance += 1 
 
     def CalcBPF(self):
-        BPF = (sum([building.bps() for building in self.BuildingTypes]) / 60) * 1.01 * len(self.player.achievements)
+        BPF = (sum([building.bps() for building in self.BuildingTypes]) / 60) * 1.01 ** len(self.player.achievements)
         return BPF
 
     def draw(self):
