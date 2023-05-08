@@ -19,7 +19,7 @@ class KeyBoard:
         self.upgrade_price = 100
 
     def bps(self):
-        return 1 * self.amount * 2 ** self.upgrades
+        return 0.1 * self.amount * 2 ** self.upgrades
 
 
 class Laptop:
@@ -30,7 +30,7 @@ class Laptop:
         self.upgrade_price = 1000
 
     def bps(self):
-        return 12.5 * self.amount * 2 ** self.upgrades
+        return 1 * self.amount * 2 ** self.upgrades
 
 
 class GamingPC:
@@ -41,7 +41,7 @@ class GamingPC:
         self.upgrade_price = 10000
 
     def bps(self):
-        return 125 * self.amount * 2 ** self.upgrades
+        return 10 * self.amount * 2 ** self.upgrades
 
 
 class Server:
@@ -52,7 +52,7 @@ class Server:
         self.upgrade_price = 100000
 
     def bps(self):
-        return 1500 * self.amount * 1.01 ** self.upgrades
+        return 100 * self.amount * 1.01 ** self.upgrades
 
 class SuperComputer:
     def __init__(self) -> None:
@@ -62,7 +62,7 @@ class SuperComputer:
         self.upgrade_price = 1000000
 
     def bps(self):
-        return 25000 * self.amount * 2 ** self.upgrades
+        return 1000 * self.amount * 2 ** self.upgrades
 
 class QuantumComputer:
     def __init__(self) -> None:
@@ -72,7 +72,7 @@ class QuantumComputer:
         self.upgrade_price = 10000000
 
     def bps(self):
-        return 500000 * self.amount * 2 ** self.upgrades
+      return 10000 * self.amount * 2 ** self.upgrades
 
 class AI:
     def __init__(self) -> None:
@@ -82,7 +82,7 @@ class AI:
         self.upgrade_price = 100000000
 
     def bps(self):
-        return 10000000 * self.amount * 2 ** self.upgrades
+      return 1000000 * self.amount * 2 ** self.upgrades
 
 class QuantumAI:
     def __init__(self) -> None:
@@ -92,7 +92,7 @@ class QuantumAI:
         self.upgrade_price = 1000000000
 
     def bps(self):
-        return 1000000000 * self.amount * 2 ** self.upgrades
+      return 10000000 * self.amount * 2 ** self.upgrades
 
 class DysonSphere:
     def __init__(self) -> None:
@@ -102,7 +102,7 @@ class DysonSphere:
         self.upgrade_price = 10000000000
 
     def bps(self):
-        return 10000000000 * self.amount * 2 ** self.upgrades
+      return 100000000 * self.amount * 2 ** self.upgrades
 
 class BitCoinMiner:
     def __init__(self) -> None:
@@ -136,7 +136,7 @@ class BitCoinMiner:
             building.upgrades += 1
 
     def click(self):
-        self.player.balance += 1
+        self.player.balance += 1 
 
     def CalcBPF(self):
         BPF = (sum([building.bps() for building in self.BuildingTypes]
