@@ -1,6 +1,9 @@
 import pygame
 import random
 import pickle
+import os
+import subprocess
+import sys
 
 pygame.init()
 pygame.display.set_caption("Cookie Typer")
@@ -18,6 +21,7 @@ class KeyBoard:
         self.next_achievement = 1
         self.upgrades = 0
         self.next_upgrade_achievement = 1
+        self.next_upgrade = 1
         self.upgrade_price = 100
 
     def bps(self):
@@ -31,6 +35,7 @@ class Laptop:
         self.next_achievement = 1
         self.upgrades = 0
         self.next_upgrade_achievement = 1
+        self.next_upgrade = 1
         self.upgrade_price = 1000
 
     def bps(self):
@@ -44,6 +49,7 @@ class GamingPC:
         self.next_achievement = 1
         self.upgrades = 0
         self.next_upgrade_achievement = 1
+        self.next_upgrade = 1
         self.upgrade_price = 10000
 
     def bps(self):
@@ -57,6 +63,7 @@ class Server:
         self.next_achievement = 1
         self.upgrades = 0
         self.next_upgrade_achievement = 1
+        self.next_upgrade = 1
         self.upgrade_price = 100000
 
     def bps(self):
@@ -69,6 +76,7 @@ class SuperComputer:
         self.next_achievement = 1
         self.upgrades = 0
         self.next_upgrade_achievement = 1
+        self.next_upgrade = 1
         self.upgrade_price = 1000000
 
     def bps(self):
@@ -80,6 +88,7 @@ class QuantumComputer:
         self.amount = 0
         self.upgrades = 0
         self.next_upgrade_achievement = 1
+        self.next_upgrade = 1
         self.upgrade_price = 10000000
 
     def bps(self):
@@ -92,6 +101,7 @@ class AI:
         self.next_achievement = 1
         self.upgrades = 0
         self.next_upgrade_achievement = 1
+        self.next_upgrade = 1
         self.upgrade_price = 100000000
 
     def bps(self):
@@ -104,6 +114,7 @@ class QuantumAI:
         self.next_achievement = 1
         self.upgrades = 0
         self.next_upgrade_achievement = 1
+        self.next_upgrade = 1
         self.upgrade_price = 1000000000
 
     def bps(self):
@@ -116,6 +127,7 @@ class DysonSphere:
         self.next_achievement = 1
         self.upgrades = 0
         self.next_upgrade_achievement = 1
+        self.next_upgrade = 1
         self.upgrade_price = 10000000000
 
     def bps(self):
@@ -125,7 +137,7 @@ class BitCoinMiner:
     def __init__(self) -> None:
         self.player = Player()
         self.total_earned = 0
-        self.screen = pygame.display.set_mode((1200, 900))
+        self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
         self.clock = pygame.time.Clock()
         self.font = pygame.font.SysFont("Arial", 30)
         self.BuildingTypes = [KeyBoard(), Laptop(), GamingPC(), Server(), SuperComputer(), QuantumComputer(), AI(), QuantumAI(), DysonSphere()]
@@ -141,11 +153,11 @@ class BitCoinMiner:
             building.price /= 1.15
             self.player.balance += building.price / 2
             building.amount -= 1
-            if building.__class__ in self.player.achievements:
+            if building.__class__ not in self.player.achievements:
                 self.player.achievements.append(building.__class__)
 
     def BuyUpgrade(self, building):
-        if self.player.balance >= building.upgrade_price:
+        if self.player.balance >= building.upgrade_price and building.amount >= building.next_upgrade:
             self.player.balance -= building.upgrade_price
             building.upgrade_price *= 10
             building.upgrades += 1
@@ -200,6 +212,14 @@ class BitCoinMiner:
                 self.player, self.BuildingTypes = pickle.load(f)
         except:
             pass
+    
+    def restart(self):
+        try:
+            os.remove("save.pickle")
+        except:
+            pass
+        subprocess.Popen([sys.executable] + sys.argv)
+        os.kill(os.getpid(), 9)
 
 
     def run(self):
@@ -216,6 +236,11 @@ class BitCoinMiner:
                     quit()
 
                 keys = pygame.key.get_pressed()
+                if event.type == pygame.KEYUP and event.key == pygame.K_s:
+                    if keys[pygame.K_LSHIFT]:
+                        self.restart()
+                    else:
+                        self.save()
                 if event.type == pygame.KEYUP and event.key == pygame.K_SPACE:
                     self.click()
                 if event.type == pygame.KEYUP and event.key == pygame.K_1:
