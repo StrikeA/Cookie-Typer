@@ -134,7 +134,7 @@ class BitCoinMiner:
             building.upgrades += 1
 
     def click(self):
-        self.player.balance += 1
+        self.player.balance += 1 
 
     def CalcBPF(self):
         BPF = (sum([building.bps() for building in self.BuildingTypes]
