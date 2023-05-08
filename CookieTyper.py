@@ -3,7 +3,7 @@ import random
 import pickle
 
 pygame.init()
-
+pygame.display.set_caption("Cookie Typer")
 
 class Player:
     def __init__(self) -> None:
@@ -72,7 +72,7 @@ class QuantumComputer:
         self.upgrade_price = 10000000
 
     def bps(self):
-        return 10000 * self.amount * 2 ** self.upgrades
+      return 10000 * self.amount * 2 ** self.upgrades
 
 class AI:
     def __init__(self) -> None:
@@ -82,7 +82,7 @@ class AI:
         self.upgrade_price = 100000000
 
     def bps(self):
-        return 1000000 * self.amount * 2 ** self.upgrades
+      return 1000000 * self.amount * 2 ** self.upgrades
 
 class QuantumAI:
     def __init__(self) -> None:
@@ -92,7 +92,7 @@ class QuantumAI:
         self.upgrade_price = 1000000000
 
     def bps(self):
-        return 10000000 * self.amount * 2 ** self.upgrades
+      return 10000000 * self.amount * 2 ** self.upgrades
 
 class DysonSphere:
     def __init__(self) -> None:
@@ -102,7 +102,7 @@ class DysonSphere:
         self.upgrade_price = 10000000000
 
     def bps(self):
-        return 100000000 * self.amount * 2 ** self.upgrades
+      return 100000000 * self.amount * 2 ** self.upgrades
 
 class BitCoinMiner:
     def __init__(self) -> None:
@@ -126,6 +126,8 @@ class BitCoinMiner:
             building.price /= 1.15
             self.player.balance += building.price / 2
             building.amount -= 1
+            if building.__class__ in self.player.achievements:
+                self.player.achievements.append(building.__class__)
 
     def BuyUpgrade(self, building):
         if self.player.balance >= building.upgrade_price:
