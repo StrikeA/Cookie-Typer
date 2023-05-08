@@ -3,7 +3,7 @@ import random
 import pickle
 
 pygame.init()
-
+pygame.display.set_caption("Cookie Typer")
 
 class Player:
     def __init__(self) -> None:
@@ -15,7 +15,9 @@ class KeyBoard:
     def __init__(self) -> None:
         self.price = 10
         self.amount = 0
+        self.next_achievement = 1
         self.upgrades = 0
+        self.next_upgrade_achievement = 1
         self.upgrade_price = 100
 
     def bps(self):
@@ -26,7 +28,9 @@ class Laptop:
     def __init__(self) -> None:
         self.price = 100
         self.amount = 0
+        self.next_achievement = 1
         self.upgrades = 0
+        self.next_upgrade_achievement = 1
         self.upgrade_price = 1000
 
     def bps(self):
@@ -37,7 +41,9 @@ class GamingPC:
     def __init__(self) -> None:
         self.price = 1000
         self.amount = 0
+        self.next_achievement = 1
         self.upgrades = 0
+        self.next_upgrade_achievement = 1
         self.upgrade_price = 10000
 
     def bps(self):
@@ -48,17 +54,21 @@ class Server:
     def __init__(self) -> None:
         self.price = 10000
         self.amount = 0
+        self.next_achievement = 1
         self.upgrades = 0
+        self.next_upgrade_achievement = 1
         self.upgrade_price = 100000
 
     def bps(self):
-        return 100 * self.amount * 1.01 ** self.upgrades
+        return 100 * self.amount * 2 ** self.upgrades
 
 class SuperComputer:
     def __init__(self) -> None:
         self.price = 100000
         self.amount = 0
+        self.next_achievement = 1
         self.upgrades = 0
+        self.next_upgrade_achievement = 1
         self.upgrade_price = 1000000
 
     def bps(self):
@@ -69,40 +79,47 @@ class QuantumComputer:
         self.price = 1000000
         self.amount = 0
         self.upgrades = 0
+        self.next_upgrade_achievement = 1
         self.upgrade_price = 10000000
 
     def bps(self):
-        return 10000 * self.amount * 2 ** self.upgrades
+      return 10000 * self.amount * 2 ** self.upgrades
 
 class AI:
     def __init__(self) -> None:
         self.price = 10000000
         self.amount = 0
+        self.next_achievement = 1
         self.upgrades = 0
+        self.next_upgrade_achievement = 1
         self.upgrade_price = 100000000
 
     def bps(self):
-        return 1000000 * self.amount * 2 ** self.upgrades
+      return 1000000 * self.amount * 2 ** self.upgrades
 
 class QuantumAI:
     def __init__(self) -> None:
         self.price = 100000000
         self.amount = 0
+        self.next_achievement = 1
         self.upgrades = 0
+        self.next_upgrade_achievement = 1
         self.upgrade_price = 1000000000
 
     def bps(self):
-        return 10000000 * self.amount * 2 ** self.upgrades
+      return 10000000 * self.amount * 2 ** self.upgrades
 
 class DysonSphere:
     def __init__(self) -> None:
         self.price = 1000000000
         self.amount = 0
+        self.next_achievement = 1
         self.upgrades = 0
+        self.next_upgrade_achievement = 1
         self.upgrade_price = 10000000000
 
     def bps(self):
-        return 100000000 * self.amount * 2 ** self.upgrades
+      return 100000000 * self.amount * 2 ** self.upgrades
 
 class BitCoinMiner:
     def __init__(self) -> None:
@@ -112,20 +129,24 @@ class BitCoinMiner:
         self.clock = pygame.time.Clock()
         self.font = pygame.font.SysFont("Arial", 30)
         self.BuildingTypes = [KeyBoard(), Laptop(), GamingPC(), Server(), SuperComputer(), QuantumComputer(), AI(), QuantumAI(), DysonSphere()]
+        self.bpf_achievment = 10000
+        self.total_achievment = 10000
+        self.click_upgrades = 1
+        self.click_upgrades_price = 100
 
     def BuyBuilding(self, building):
         if self.player.balance >= building.price:
             self.player.balance -= building.price
             building.price *= 1.15
             building.amount += 1
-        if building.__class__ not in self.player.achievements:
-            self.player.achievements.append(building.__class__)
 
     def SellBuilding(self, building):
         if building.amount > 0:
             building.price /= 1.15
             self.player.balance += building.price / 2
             building.amount -= 1
+            if building.__class__ in self.player.achievements:
+                self.player.achievements.append(building.__class__)
 
     def BuyUpgrade(self, building):
         if self.player.balance >= building.upgrade_price:
@@ -134,11 +155,10 @@ class BitCoinMiner:
             building.upgrades += 1
 
     def click(self):
-        self.player.balance += 1 
+        self.player.balance += 1 * self.click_upgrades
 
     def CalcBPF(self):
-        BPF = (sum([building.bps() for building in self.BuildingTypes]
-                   ) / 60) * 1.01 * len(self.player.achievements)
+        BPF = (sum([building.bps() for building in self.BuildingTypes]) / 60) * 1.01 ** len(self.player.achievements)
         return BPF
 
     def draw(self):
@@ -161,8 +181,29 @@ class BitCoinMiner:
             self.screen.blit(self.font.render(
                 f"Price: {round(building.upgrade_price, 2)}", True, (0, 0, 0)), (400, y_pos + 30))
             y_pos += 60
+        self.screen.blit(self.font.render(
+            f"Click upgrades: {self.click_upgrades - 1}", True, (0, 0, 0)), (10, 610))
+        self.screen.blit(self.font.render(
+            f"Click upgrade price: {self.click_upgrades_price}", True, (0, 0, 0)), (400,610))
 
         pygame.display.update()
+
+    def achievements(self):
+        for building in self.BuildingTypes:
+            if building.amount >= building.next_achievement:
+                self.player.achievements.append(building.__class__)
+                building.next_achievement *= 10
+            if building.upgrades >= building.next_upgrade_achievement:
+                self.player.achievements.append(building.__class__)
+                building.next_upgrade_achievement *= 10
+            if (self.CalcBPF() * 60) >= self.bpf_achievment:
+                self.player.achievements.append("bps_achievment")
+                self.bpf_achievment *= 10
+            if self.player.balance >= self.total_achievment:
+                self.player.achievements.append("total_achievment")
+                self.total_achievment *= 10
+            if self.total_earned == 1:
+                self.player.achievements.append("You've done it!")
 
     def save(self):
         with open("save.pickle", "wb") as f:
@@ -191,7 +232,13 @@ class BitCoinMiner:
 
                 keys = pygame.key.get_pressed()
                 if event.type == pygame.KEYUP and event.key == pygame.K_SPACE:
-                    self.click()
+                    if keys[pygame.K_LSHIFT]:
+                        if self.player.balance >= self.click_upgrades_price:
+                            self.click_upgrades += 1
+                            self.player.balance -= self.click_upgrades_price
+                            self.click_upgrades_price *= 10
+                    else:
+                        self.click()
                 if event.type == pygame.KEYUP and event.key == pygame.K_1:
                     if keys[pygame.K_LSHIFT]:
                         self.SellBuilding(self.BuildingTypes[0])
