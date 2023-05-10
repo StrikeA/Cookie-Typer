@@ -135,6 +135,8 @@ class DysonSphere:
 
 class BitCoinMiner:
     def __init__(self) -> None:
+        self.display_info = pygame.display.Info()
+        self.hight = self.display_info.current_h
         self.player = Player()
         self.total_earned = 0
         self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
@@ -180,7 +182,7 @@ class BitCoinMiner:
         self.screen.blit(self.font.render(
             f"BPS: {round(self.CalcBPF() * 60, 2)}", True, (0, 0, 0)), (10, 40))
         self.screen.blit(self.font.render(
-            f"Achievements: {len(self.player.achievements)}", True, (0, 0, 0)), (10, 850))
+            f"Achievements: {len(self.player.achievements)}", True, (0, 0, 0)), (10, self.hight - 60))
 
         y_pos = 70
         for building in self.BuildingTypes:
@@ -246,6 +248,10 @@ class BitCoinMiner:
             self.draw()
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
+                    self.save()
+                    pygame.quit()
+                    quit()
+                if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                     self.save()
                     pygame.quit()
                     quit()
