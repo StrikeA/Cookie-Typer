@@ -1,9 +1,15 @@
-# Importing all of the systems.
+# Importing all of the systems
+# Importing pygame
 import pygame
+# Importing random
 import random
+# Importing pickle
 import pickle
+# Importing os
 import os
+# Importing subprocess
 import subprocess
+# Importing sys
 import sys
 
 # Creating the window and initiating pygame
@@ -22,11 +28,17 @@ class Player:
 class KeyBoard:
     def __init__(self) -> None:
 # More key variables that are included in every building class
+# The price of the building
         self.price = 10
+# The amount of buildings
         self.amount = 0
+# The next achievement
         self.next_achievement = 1
+# The amount of upgrades and variables that deal with them
         self.upgrades = 0
+# The next achievment for upgrades
         self.next_upgrade_achievement = 1
+# The cost of the next upgrades and the price
         self.next_upgrade = 1
         self.upgrade_price = 100
 
@@ -39,11 +51,17 @@ class KeyBoard:
 class Laptop:
     def __init__(self) -> None:
 # More key variables that are included in every building class
+# The price of the building
         self.price = 100
+# The amount of buildings
         self.amount = 0
+# The next achievement
         self.next_achievement = 1
+# The amount of upgrades and variables that deal with them
         self.upgrades = 0
+# The next achievment for upgrades
         self.next_upgrade_achievement = 1
+# The cost of the next upgrades and the price
         self.next_upgrade = 1
         self.upgrade_price = 1000
 
@@ -56,11 +74,17 @@ class Laptop:
 class GamingPC:
     def __init__(self) -> None:
 # More key variables that are included in every building class
+# The price of the building
         self.price = 1000
+# The amount of buildings
         self.amount = 0
+# The next achievement
         self.next_achievement = 1
+# The amount of upgrades and variables that deal with them
         self.upgrades = 0
+# The next achievment for upgrades
         self.next_upgrade_achievement = 1
+# The cost of the next upgrades and the price
         self.next_upgrade = 1
         self.upgrade_price = 10000
 
@@ -73,11 +97,17 @@ class GamingPC:
 class Server:
     def __init__(self) -> None:
 # More key variables that are included in every building class
+# The price of the building
         self.price = 10000
+# The amount of buildings
         self.amount = 0
+# The next achievement
         self.next_achievement = 1
+# The amount of upgrades and variables that deal with them
         self.upgrades = 0
+# The next achievment for upgrades
         self.next_upgrade_achievement = 1
+# The cost of the next upgrades and the price
         self.next_upgrade = 1
         self.upgrade_price = 100000
 
@@ -90,11 +120,17 @@ class Server:
 class SuperComputer:
     def __init__(self) -> None:
 # More key variables that are included in every building class
+# The price of the building
         self.price = 100000
+# The amount of buildings
         self.amount = 0
+# The next achievement
         self.next_achievement = 1
+# The amount of upgrades and variables that deal with them
         self.upgrades = 0
+# The next achievment for upgrades
         self.next_upgrade_achievement = 1
+# The cost of the next upgrades and the price
         self.next_upgrade = 1
         self.upgrade_price = 1000000
 
@@ -107,10 +143,17 @@ class SuperComputer:
 class QuantumComputer:
     def __init__(self) -> None:
 # More key variables that are included in every building class
+# The price of the building
         self.price = 1000000
+# The amount of buildings
         self.amount = 0
+# The next achievement
+        self.next_achievement = 1
+# The amount of upgrades and variables that deal with them
         self.upgrades = 0
+# The next achievment for upgrades
         self.next_upgrade_achievement = 1
+# The cost of the next upgrades and the price
         self.next_upgrade = 1
         self.upgrade_price = 10000000
 
@@ -123,11 +166,17 @@ class QuantumComputer:
 class AI:
     def __init__(self) -> None:
 # More key variables that are included in every building class
+# The price of the building
         self.price = 10000000
+# The amount of buildings
         self.amount = 0
+# The next achievement
         self.next_achievement = 1
+# The amount of upgrades and variables that deal with them
         self.upgrades = 0
+# The next achievment for upgrades
         self.next_upgrade_achievement = 1
+# The cost of the next upgrades and the price
         self.next_upgrade = 1
         self.upgrade_price = 100000000
 
@@ -140,11 +189,17 @@ class AI:
 class QuantumAI:
     def __init__(self) -> None:
 # More key variables that are included in every building class
+# The price of the building
         self.price = 100000000
+# The amount of buildings
         self.amount = 0
+# The next achievement
         self.next_achievement = 1
+# The amount of upgrades and variables that deal with them
         self.upgrades = 0
+# The next achievment for upgrades
         self.next_upgrade_achievement = 1
+# The cost of the next upgrades and the price
         self.next_upgrade = 1
         self.upgrade_price = 1000000000
 
@@ -157,11 +212,17 @@ class QuantumAI:
 class DysonSphere:
     def __init__(self) -> None:
 # More key variables that are included in every building class
+# The price of the building
         self.price = 1000000000
+# The amount of buildings
         self.amount = 0
+# The next achievement
         self.next_achievement = 1
+# The amount of upgrades and variables that deal with them
         self.upgrades = 0
+# The next achievment for upgrades
         self.next_upgrade_achievement = 1
+# The cost of the next upgrades and the price
         self.next_upgrade = 1
         self.upgrade_price = 10000000000
 
@@ -186,26 +247,35 @@ class BitCoinMiner:
         self.font = pygame.font.SysFont("Arial", 30)
 # Bringing the building types into a list
         self.BuildingTypes = [KeyBoard(), Laptop(), GamingPC(), Server(), SuperComputer(), QuantumComputer(), AI(), QuantumAI(), DysonSphere()]
-# Miscellaneous
-        self.bpf_achievment = 10000
+# bpf achievment
+        self.bpf_achievment = 100
+# Total earned achievment
         self.total_achievment = 10000
+# Click upgrade amount
         self.click_upgrades = 1
+# Price of the next upgrade
         self.click_upgrades_price = 100
 
 # The function that is used to purchase buildings and regulate the price of buildings
     def BuyBuilding(self, building):
 # Checking if the player has enough balance
         if self.player.balance >= building.price:
+# Decreasing your money
             self.player.balance -= building.price
+# Increasing the price of the building
             building.price *= 1.15
+# Increasing the amount of buildings
             building.amount += 1
 
 # The function that is used to sell buildings
     def SellBuilding(self, building):
 # Checking if the player has enough buildings to sell, and decreasing the building price
         if building.amount > 0:
+# decreasing the price of buildings
             building.price /= 1.15
+# Increasing the players balance
             self.player.balance += building.price / 2
+# Lowering the amount of buildings
             building.amount -= 1
 # Checking if the player has the achievement for said building, and giving it to them if they do not
             if building.__class__ not in self.player.achievements:
@@ -215,8 +285,11 @@ class BitCoinMiner:
     def BuyUpgrade(self, building):
 # Making sure the purchase requirments are met
         if self.player.balance >= building.upgrade_price and building.amount >= building.next_upgrade:
+# Subtracting your money from your balance
             self.player.balance -= building.upgrade_price
+# Increasing the price of subsequent upgrades
             building.upgrade_price *= 10
+# Increasing the actual amount of upgrades
             building.upgrades += 1
 
 # The function that allows for clicking 
@@ -357,103 +430,174 @@ class BitCoinMiner:
 # Creating the window
             self.draw()
 # If you quit the game, it saves
+# For loop
             for event in pygame.event.get():
+# Checking if the player wants to quit
                 if event.type == pygame.QUIT:
+# Saving the game
                     self.save()
+# Exiting the game
                     pygame.quit()
+# Exiting the game again
                     quit()
 
 # Creating keybinds for every task
                 keys = pygame.key.get_pressed()
 # Saving the game
+# If statement
                 if event.type == pygame.KEYUP and event.key == pygame.K_s:
+# If statement
                     if keys[pygame.K_LSHIFT]:
+# Restarting the game
                         self.restart()
+# Else statement
                     else:
+# Saving the game
                         self.save()
 # The click method
+# If statement
                 if event.type == pygame.KEYUP and event.key == pygame.K_SPACE:
+# If statement
                     if keys[pygame.K_LSHIFT]:
+# If statement
                         if self.player.balance >= self.click_upgrades_price:
+# Increasing the amount of click upgrades
                             self.click_upgrades += 1
+# Stealing your money
                             self.player.balance -= self.click_upgrades_price
+# Increasing the price of click upgrades
                             self.click_upgrades_price *= 10
                     else:
                         self.click()
 # Buying and regulating keyboards
                 if event.type == pygame.KEYUP and event.key == pygame.K_1:
+# Checking if the player is trying to sell
                     if keys[pygame.K_LSHIFT]:
+# If statement
                         self.SellBuilding(self.BuildingTypes[0])
+# Checking if the player is trying to upgrade
                     elif keys[pygame.K_LCTRL]:
+# Elif statement
                         self.BuyUpgrade(self.BuildingTypes[0])
+# Checking if the player wants to buy
                     else:
+# Else statement
                         self.BuyBuilding(self.BuildingTypes[0])
 # Buying and regulating Laptops
                 if event.type == pygame.KEYUP and event.key == pygame.K_2:
+# Checking if the player is trying to sell
                     if keys[pygame.K_LSHIFT]:
+# If statement
                         self.SellBuilding(self.BuildingTypes[1])
+# Checking if the player is trying to upgrade
                     elif keys[pygame.K_LCTRL]:
+# Elif statement
                         self.BuyUpgrade(self.BuildingTypes[1])
+# Checking if the player wants to buy
                     else:
+# Else statement
                         self.BuyBuilding(self.BuildingTypes[1])
 # Buying and regulating GamingPCs
                 if event.type == pygame.KEYUP and event.key == pygame.K_3:
+# Checking if the player is trying to sell
                     if keys[pygame.K_LSHIFT]:
+# If statement
                         self.SellBuilding(self.BuildingTypes[2])
+# Checking if the player is trying to upgrade
                     elif keys[pygame.K_LCTRL]:
+# Elif statement
                         self.BuyUpgrade(self.BuildingTypes[2])
+# Checking if the player wants to buy
                     else:
+# Else statement
                         self.BuyBuilding(self.BuildingTypes[2])
 # Buying and regulating servers
                 if event.type == pygame.KEYUP and event.key == pygame.K_4:
+# Checking if the player is trying to sell
                     if keys[pygame.K_LSHIFT]:
+# If statement
                         self.SellBuilding(self.BuildingTypes[3])
+# Checking if the player is trying to upgrade
                     elif keys[pygame.K_LCTRL]:
+# Elif statement
                         self.BuyUpgrade(self.BuildingTypes[3])
+# Checking if the player wants to buy
                     else:
+# Else statement
                         self.BuyBuilding(self.BuildingTypes[3])
 # Buying and regulating Super computers
                 if event.type == pygame.KEYUP and event.key == pygame.K_5:
+# Checking if the player is trying to sell
                     if keys[pygame.K_LSHIFT]:
+# If statement
                         self.SellBuilding(self.BuildingTypes[4])
+# Checking if the player is trying to upgrade
                     elif keys[pygame.K_LCTRL]:
+# Elif statement
                         self.BuyUpgrade(self.BuildingTypes[4])
+# Checking if the player wants to buy
                     else:
+# Else statement
                         self.BuyBuilding(self.BuildingTypes[4])
 # Buying and regulating Quantum computers
                 if event.type == pygame.KEYUP and event.key == pygame.K_6:
+# Checking if the player is trying to sell
                     if keys[pygame.K_LSHIFT]:
+# If statement
                         self.SellBuilding(self.BuildingTypes[5])
+# Checking if the player is trying to upgrade
                     elif keys[pygame.K_LCTRL]:
+# Elif statement
                         self.BuyUpgrade(self.BuildingTypes[5])
+# Checking if the player wants to buy
                     else:
+# Else statement
                         self.BuyBuilding(self.BuildingTypes[5])
 # Buying and regulating AIs
                 if event.type == pygame.KEYUP and event.key == pygame.K_7:
+# Checking if the player is trying to sell
                     if keys[pygame.K_LSHIFT]:
+# If statement
                         self.SellBuilding(self.BuildingTypes[6])
+# Checking if the player is trying to upgrade
                     elif keys[pygame.K_LCTRL]:
+# Elif statement
                         self.BuyUpgrade(self.BuildingTypes[6])
+# Checking if the player wants to buy
                     else:
+# Else statement
                         self.BuyBuilding(self.BuildingTypes[6])
 # Buying and regulating Quantum AIs
                 if event.type == pygame.KEYUP and event.key == pygame.K_8:
+# Checking if the player is trying to sell
                     if keys[pygame.K_LSHIFT]:
+# If statement
                         self.SellBuilding(self.BuildingTypes[7])
+# Checking if the player is trying to upgrade
                     elif keys[pygame.K_LCTRL]:
+# Elif statement
                         self.BuyUpgrade(self.BuildingTypes[7])
+# Checking if the player wants to buy
                     else:
+# Else statement
                         self.BuyBuilding(self.BuildingTypes[7])
 # Buying and regulating Dyson spheres
                 if event.type == pygame.KEYUP and event.key == pygame.K_9:
+# Checking if the player is trying to sell
                     if keys[pygame.K_LSHIFT]:
+# If statement
                         self.SellBuilding(self.BuildingTypes[8])
+# Checking if the player is trying to upgrade
                     elif keys[pygame.K_LCTRL]:
+# Elif statement
                         self.BuyUpgrade(self.BuildingTypes[8])
+# Checking if the player wants to buy
                     else:
+# Else statement
                         self.BuyBuilding(self.BuildingTypes[8])
 
 
 # Running the actual game
 Game = BitCoinMiner()
+# Also running the actual game
 Game.run()
